@@ -11,6 +11,10 @@ const upload=require('./multer');
 
 var router = express.Router();
 
+router.get('/favicon.ico', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public','images','uploads', 'favicon.ico'));
+});
+
 /* GET home page. */
 router.get('/register', function(req, res, next) {
   res.render('index');  
