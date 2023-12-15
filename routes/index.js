@@ -87,7 +87,7 @@ router.get('/login', function(req, res, next) {
   })
 
   //feed
-  router.get('/feed', async function(req, res) {
+  router.get('/feed',isLoggedIn, async function(req, res) {
     try {
       const user = await userModel.findOne({ username: req.session.passport.user });
       if (!user) {
