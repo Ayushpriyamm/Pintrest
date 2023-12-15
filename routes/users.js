@@ -1,7 +1,14 @@
 const mongoose=require("mongoose");
 const plm=require("passport-local-mongoose")
+require('dotenv').config();
 
-mongoose.connect("mongodb+srv://ayushpriyam24:PjtLxTINw2dCreSA@cluster0.tb5so4r.mongodb.net/?retryWrites=true&w=majority")
+mongoose.connect(process.env.MONGODB_URL)
+  .then(() => {
+    console.log('Connected to MongoDB');
+  })
+  .catch((err) => {
+    console.error('Error connecting to MongoDB:', err);
+  });
 
 const userSchema=mongoose.Schema({
 	
