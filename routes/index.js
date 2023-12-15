@@ -87,12 +87,28 @@ router.get('/login', function(req, res, next) {
   })
 
   //feed
-  router.get('/feed',async function(req,res) {
-    const allpost=  await postModel.find().populate('user');
-    const user= await userModel.findOne({username:req.session.passport.user})
-    const dpURL = user ? user.dp : '';
-    res.render("feed",{allpost,dpURL});
-  })
+  router.get('/feed', async function(req, res) {
+    try {
+      const user = await userModel.findOne({ username: req.session.passport.user });
+      if (!user) {
+        return res.status(404).send('User not found');
+      }
+  
+      const allpost = await postModel.find().populate('user');
+      const dpURL = user.dp || ''; // Handle cases where user.dp might be undefined/null
+  
+      // Log fetched data or user details for debugging
+      console.log('Fetched user:', user);
+      console.log('All posts:', allpost);
+  
+      res.render("feed", { allpost, dpURL });
+    } catch (error) {
+      // Handle errors by logging and sending an error response
+      console.error('Error in /feed route:', error);
+      res.status(500).send('Internal Server Error');
+    }
+  });
+  
 
   //post Details
   router.get('/postDetails/:postId',isLoggedIn, async function (req,res) {
