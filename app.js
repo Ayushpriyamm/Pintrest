@@ -21,11 +21,22 @@ app.set('view engine', 'ejs');
 
 app.use(flash());
 
+// MongoDBStore configuration
+const store = new MongoDBStore({
+  uri: process.env.MONGODB_URL,
+  collection: 'sessions'
+});
+
+store.on('error', function(error) {
+  console.log(error);
+});
+
 //setting up session
 app.use(session({
   resave:false,
   saveUninitialized:false,
-  secret:"siliconValley"
+  secret:"siliconValley",
+  store: store
 }))
 
 //setting up session
