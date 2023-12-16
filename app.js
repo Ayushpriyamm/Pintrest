@@ -13,6 +13,8 @@ var flash=require('connect-flash');
 
 const passport=require('passport')
 
+const MongoDBStore = require('connect-mongodb-session')(session);
+
 var app = express();
 
 // view engine setup
