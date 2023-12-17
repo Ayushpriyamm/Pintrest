@@ -97,9 +97,7 @@ router.get('/login', function(req, res, next) {
       const allpost = await postModel.find().populate('user');
       const dpURL = user.dp || ''; // Handle cases where user.dp might be undefined/null
   
-      // Log fetched data or user details for debugging
-      console.log('Fetched user:', user);
-      console.log('All posts:', allpost);
+      
   
       res.render("feed", { allpost, dpURL });
     } catch (error) {
